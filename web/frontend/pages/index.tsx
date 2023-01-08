@@ -50,7 +50,7 @@ export default function HomePage() {
             >
               <Stack.Item fill>
                 <TextContainer spacing="loose">
-                  <Heading>Nice work on building a Shopify app 🎉</Heading>
+                  <Heading>Nice work on building a Shopify app 🎉🎉</Heading>
                   <p>
                     Your app is ready to explore! It contains everything you
                     need to get started including the{" "}
