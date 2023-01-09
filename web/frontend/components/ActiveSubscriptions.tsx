@@ -38,16 +38,7 @@ function useGetSubscription() {
   });
 }
 
-type ToastFn = React.Dispatch<
-  React.SetStateAction<{
-    toast: {
-      msg: string;
-      show: boolean;
-    };
-  }>
->;
-
-function useDoSubscribe(showToast: ToastFn) {
+function useDoSubscribe(showToast: (msg: string) => void) {
   const fetch = useAuthenticatedFetch();
   const app = useAppBridge();
   const redirect = Redirect.create(app);
@@ -61,15 +52,13 @@ function useDoSubscribe(showToast: ToastFn) {
     },
     {
       onError: () => {
-        showToast({
-          toast: { msg: "Error updating billing plan!", show: true },
-        });
+        showToast("Error updating billing plan!");
       },
     }
   );
 }
 
-function useDoUnsubscribe(showToast: ToastFn) {
+function useDoUnsubscribe(showToast: (msg: string) => void) {
   const queryClient = useQueryClient();
   const fetch = useAuthenticatedFetch();
   return useMutation(
@@ -80,14 +69,15 @@ function useDoUnsubscribe(showToast: ToastFn) {
       }).then((res: Response) => res.json());
     },
     {
+      onMutate: async () => {
+        showToast("Updating...");
+      },
       onSuccess: async () => {
         await queryClient.invalidateQueries(["api", "subscription"]);
-        showToast({ toast: { msg: "Billing Plan Updated!", show: true } });
+        showToast("Billing Plan Updated!");
       },
       onError: () => {
-        showToast({
-          toast: { msg: "Error updating billing plan!", show: true },
-        });
+        showToast("Error updating billing plan!");
       },
     }
   );
@@ -96,8 +86,12 @@ function useDoUnsubscribe(showToast: ToastFn) {
 export function ActiveSubscriptions() {
   const subscription = useGetSubscription();
   const [{ toast }, setToast] = useState({ toast: { msg: "", show: false } });
-  const { mutate: unsubscribe } = useDoUnsubscribe(setToast);
-  const { mutate: subscribe } = useDoSubscribe(setToast);
+  const showToast = (msg: string) => {
+    setToast({ toast: { msg: "", show: false } });
+    setToast({ toast: { msg, show: true } });
+  };
+  const { mutate: unsubscribe } = useDoUnsubscribe(showToast);
+  const { mutate: subscribe } = useDoSubscribe(showToast);
 
   const toastMarkup = toast.show && (
     <Toast

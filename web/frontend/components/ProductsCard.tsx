@@ -21,7 +21,7 @@ function useProductCount() {
   });
 }
 
-function useProductCreate(noOfProducts = 2, showToast: () => void) {
+function useProductCreate(noOfProducts = 2, showToast: (msg: string) => void) {
   const queryClient = useQueryClient();
   const fetch = useAuthenticatedFetch();
   return useMutation(
@@ -31,6 +31,7 @@ function useProductCreate(noOfProducts = 2, showToast: () => void) {
     },
     {
       onMutate: async () => {
+        showToast("Updating...");
         await queryClient.cancelQueries(["api", "products", "count"]);
         const previousCount: number = +queryClient.getQueryData([
           "api",
@@ -54,22 +55,25 @@ function useProductCreate(noOfProducts = 2, showToast: () => void) {
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries(["api", "products", "count"]);
-        showToast();
+        showToast("2 products created!");
       },
     }
   );
 }
 
 export function ProductsCard() {
-  const [hasResults, setHasResults] = useState(false);
-  const showToast = () => setHasResults(true);
+  const [{ toast }, setToast] = useState({ toast: { msg: "", show: false } });
+  const showToast = (msg: string) => {
+    setToast({ toast: { msg: "", show: false } });
+    setToast({ toast: { msg, show: true } });
+  };
   const { mutate } = useProductCreate(2, showToast);
   const { data: count, isLoading, error } = useProductCount();
 
-  const toastMarkup = hasResults && (
+  const toastMarkup = toast.show && (
     <Toast
-      content="2 products created!"
-      onDismiss={() => setHasResults(false)}
+      content={toast.msg}
+      onDismiss={() => setToast({ toast: { msg: "", show: false } })}
     />
   );
 
