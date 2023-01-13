@@ -9,15 +9,18 @@ import {
 } from "@shopify/polaris";
 import { useNavigate } from "react-router";
 import trophyImgUrl from "../assets/home-trophy.png";
-// import analytics from "../lib/segment/index.js";
+import mixpanel from "../lib/mixpanel.js";
+
+const updateMixPanel = () => {
+  mixpanel.then((mp) => {
+    mp.track("Page Index View", {
+      source: "Some source",
+    });
+  });
+};
 
 export default function PageIndex() {
-  // Example tracking
-  // analytics.page({
-  //   userId: "testshopify.myshopify.com",
-  //   name: "Index",
-  //   type: "page",
-  // });
+  updateMixPanel();
 
   const navigate = useNavigate();
 

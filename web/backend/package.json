@@ -29,6 +29,7 @@
     "@shopify/shopify-app-session-storage-sqlite": "^1.0.1",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
+    "mixpanel": "^0.17.0",
     "serve-static": "^1.15.0"
   },
   "devDependencies": {

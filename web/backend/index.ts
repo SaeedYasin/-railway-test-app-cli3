@@ -76,12 +76,12 @@ app.use("/api/products", productRoutes);
 app.use("/api/shop", shopRoutes);
 app.use("/api/billing", billingRoutes);
 
-app.use(serveStatic(STATIC_PATH, { index: false }));
-
 // Reply to health check to let server know we are ready
 app.use("/health", (_req, res) => {
   res.status(200).send();
 });
+
+app.use(serveStatic(STATIC_PATH, { index: false }));
 
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res) => {
   return res

@@ -1,16 +1,37 @@
-import { createContext, useContext, useMemo, useReducer } from "react";
-import type { ShopUpdate } from "../../@types/shop";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import { PropsWithChildren } from "react";
+import { useAuthenticatedFetch } from "../hooks";
+import mixpanel from "../lib/mixpanel.js";
 
+type ShopObj = { shop: string };
 type Action = {
   type: "GET_SHOP" | "UPDATE_SHOP";
-  payload?: ShopUpdate;
+  payload?: ShopObj;
 };
 
-const initialState = {};
-const shopContext = createContext(initialState);
+const initialState = {
+  state: {},
+  getShop: () => {
+    /* */
+  },
+  updateShop: (payload: ShopObj) => {
+    /* */
+  },
+};
+const shopContext = createContext<{
+  state: any;
+  getShop: () => void;
+  updateShop: (payload: ShopObj) => void;
+}>(initialState);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function reducer(state: any, action: Action) {
   switch (action.type) {
     case "GET_SHOP": {
@@ -21,7 +42,6 @@ function reducer(state: any, action: Action) {
 
     case "UPDATE_SHOP": {
       return {
-        ...state,
         ...action.payload,
       };
     }
@@ -33,13 +53,26 @@ function reducer(state: any, action: Action) {
 
 export const ShopProvider = (props: PropsWithChildren) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const fetch = useAuthenticatedFetch();
 
-  // METHODS
+  useEffect(() => {
+    (async () => {
+      const shop: ShopObj = await fetch("/api/shop/name").then((res) =>
+        res.json()
+      );
+      updateShop(shop);
+      mixpanel.then((mp) => {
+        mp.identify(shop.shop);
+        mp.register({ shop: shop.shop });
+      });
+    })();
+  }, []);
+
   const getShop = () => {
     dispatch({ type: "GET_SHOP" });
   };
 
-  const updateShop = (payload: ShopUpdate) => {
+  const updateShop = (payload: ShopObj) => {
     dispatch({ type: "UPDATE_SHOP", payload });
   };
 
@@ -65,6 +98,6 @@ export const useShop = () => {
   return context;
 };
 
-export const ShopContextProvider = ({ children }: PropsWithChildren) => (
-  <ShopProvider>{children}</ShopProvider>
-);
+export const ShopContextProvider = ({ children }: PropsWithChildren) => {
+  return <ShopProvider>{children}</ShopProvider>;
+};

@@ -13,15 +13,19 @@ import { TitleBar } from "@shopify/app-bridge-react";
 import { useNavigate } from "react-router-dom";
 import trophyImgUrl from "../assets/home-trophy.png";
 import { ProductsCard } from "../components/ProductsCard.js";
-// import analytics from "../lib/segment/index.js";
+import mixpanel from "../lib/mixpanel.js";
+
+const updateMixPanel = () => {
+  mixpanel.then((mp) => {
+    mp.track("HomePage View", {
+      source: "Some source",
+    });
+  });
+};
 
 export default function HomePage() {
-  // Example tracking
-  // analytics.page({
-  //   userId: "testshopify.myshopify.com",
-  //   name: "Home",
-  //   type: "page",
-  // });
+  updateMixPanel();
+
   const navigate = useNavigate();
   const pagesLinks = [
     {
