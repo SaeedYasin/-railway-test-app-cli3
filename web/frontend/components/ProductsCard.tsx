@@ -61,7 +61,7 @@ function useProductCreate(noOfProducts = 2, showToast: (msg: string) => void) {
   );
 }
 
-export function ProductsCard() {
+export default function ProductsCard() {
   const [{ toast }, setToast] = useState({ toast: { msg: "", show: false } });
   const showToast = (msg: string) => {
     setToast({ toast: { msg: "", show: false } });

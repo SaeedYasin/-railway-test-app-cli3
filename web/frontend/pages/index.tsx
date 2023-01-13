@@ -12,7 +12,8 @@ import {
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useNavigate } from "react-router-dom";
 import trophyImgUrl from "../assets/home-trophy.png";
-import { ProductsCard } from "../components/ProductsCard.js";
+import React, { Suspense } from "react";
+const ProductsCard = React.lazy(() => import("../components/ProductsCard"));
 import mixpanel from "../lib/mixpanel.js";
 
 const updateMixPanel = () => {
@@ -100,7 +101,9 @@ export default function HomePage() {
           </Card>
         </Layout.Section>
         <Layout.Section secondary>
-          <ProductsCard />
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProductsCard />
+          </Suspense>
         </Layout.Section>
         <Layout.Section fullWidth>
           <Card>

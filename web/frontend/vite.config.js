@@ -50,6 +50,15 @@ export default defineConfig({
   resolve: {
     preserveSymlinks: true,
   },
+  build: {
+    rollupOptions: {
+      manualChunks: {
+        "@shopify/app-bridge/actions": ["@shopify/app-bridge/actions"],
+        "@shopify/app-bridge-react": ["@shopify/app-bridge-react"],
+        "@shopify/polaris": ["@shopify/polaris"],
+      },
+    },
+  },
   server: {
     host: "localhost",
     port: process.env.FRONTEND_PORT,
