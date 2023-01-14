@@ -1,6 +1,6 @@
 import {
   Card,
-  Heading,
+  Text,
   Image,
   Layout,
   Page,
@@ -45,7 +45,9 @@ export default function PageIndex() {
             >
               <Stack.Item fill>
                 <TextContainer spacing="loose">
-                  <Heading>Page Index Example</Heading>
+                  <Text variant="headingMd" as="h1">
+                    Page Index Example
+                  </Text>
                 </TextContainer>
               </Stack.Item>
               <Stack.Item>
@@ -70,7 +72,9 @@ export default function PageIndex() {
             >
               <Stack.Item fill>
                 <TextContainer spacing="loose">
-                  <Heading>Secondary Section</Heading>
+                  <Text variant="headingMd" as="h1">
+                    Secondary Section
+                  </Text>
                 </TextContainer>
               </Stack.Item>
             </Stack>

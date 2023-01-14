@@ -52,10 +52,11 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      manualChunks: {
-        "@shopify/app-bridge/actions": ["@shopify/app-bridge/actions"],
-        "@shopify/app-bridge-react": ["@shopify/app-bridge-react"],
-        "@shopify/polaris": ["@shopify/polaris"],
+      output: {
+        manualChunks: {
+          "@shopify/polaris": ["@shopify/polaris"],
+          "@shopify/app-bridge-react": ["@shopify/app-bridge-react"],
+        },
       },
     },
   },

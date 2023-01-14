@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Card,
-  Heading,
-  TextContainer,
-  DisplayText,
-  TextStyle,
-  Button,
-} from "@shopify/polaris";
+import { Card, Text, TextContainer, Button } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
 import { useAuthenticatedFetch } from "../hooks";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
@@ -86,16 +79,14 @@ export default function ProductsCard() {
             Sample products are created with a default title and price. You can
             remove them at any time.
           </p>
-          <Heading element="h4">
+          <Text variant="headingMd" as="h1">
             TOTAL PRODUCTS
-            <DisplayText size="medium">
-              <TextStyle variation="strong">
-                {isLoading && ".."}
-                {error && "??"}
-                {!isLoading && count}
-              </TextStyle>
-            </DisplayText>
-          </Heading>
+            <Text variant="heading2xl" as="p">
+              {isLoading && ".."}
+              {error && "??"}
+              {!isLoading && count}
+            </Text>
+          </Text>
           <Button outline loading={isLoading} onClick={mutate}>
             Populate 2 products
           </Button>

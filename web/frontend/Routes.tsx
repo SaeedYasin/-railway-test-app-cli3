@@ -1,12 +1,10 @@
 import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
 import { ComponentType } from "react";
 
-type Pages = Record<
-  string,
-  {
-    [key: string]: ComponentType;
-  }
->;
+export type Route = {
+  [key: string]: ComponentType;
+};
+type Pages = Record<string, Route>;
 
 /**
  * File-based routing.
@@ -22,7 +20,7 @@ type Pages = Record<
  *
  * @return {Routes} `<Routes/>` from React Router, with a `<Route/>` for each file in `pages`
  */
-export default function Routes({ pages }: { pages: Pages }) {
+export default function Routes({ pages }: { pages: Pages }): JSX.Element {
   const routes = useRoutes(pages);
   const routeComponents = routes.map(({ path, component: Component }) => (
     <Route key={path} path={path} element={<Component />} />

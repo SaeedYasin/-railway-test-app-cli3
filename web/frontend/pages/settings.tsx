@@ -1,4 +1,4 @@
-import { DisplayText, Page, Stack } from "@shopify/polaris";
+import { Text, Page, Stack } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { ActiveSubscriptions } from "../components/ActiveSubscriptions";
 
@@ -9,7 +9,9 @@ const Settings = () => {
       <Stack wrap={false} distribution="fill" alignment="center" vertical>
         <Stack.Item>
           <Stack vertical spacing="extraTight" alignment="center">
-            <DisplayText size="small">Settings page</DisplayText>
+            <Text variant="heading2xl" as="h1">
+              Settings page
+            </Text>
           </Stack>
         </Stack.Item>
         <Stack.Item>
