@@ -3,7 +3,12 @@ import { NavigationMenu } from "@shopify/app-bridge-react";
 import Routes from "./Routes";
 
 import { GlobalLoadingIndicator } from "./components/GlobalLoadingIndicator.jsx";
-import { AppBridgeProvider, QueryProvider, PolarisProvider } from "./providers";
+import {
+  AppBridgeProvider,
+  QueryProvider,
+  PolarisProvider,
+  DiscountProvider,
+} from "./providers";
 import { ShopContextProvider } from "./hooks/index.js";
 import { HelmetProvider } from "react-helmet-async";
 import type { Route } from "./Routes";
@@ -22,26 +27,28 @@ export default function App() {
     <PolarisProvider>
       <BrowserRouter>
         <AppBridgeProvider>
-          <QueryProvider>
-            <GlobalLoadingIndicator />
-            <ShopContextProvider>
-              <HelmetProvider>
-                <NavigationMenu
-                  navigationLinks={[
-                    {
-                      label: "Settings",
-                      destination: "/settings",
-                    },
-                    {
-                      label: "Page name",
-                      destination: "/pagename",
-                    },
-                  ]}
-                />
-                <Routes pages={pages} />
-              </HelmetProvider>
-            </ShopContextProvider>
-          </QueryProvider>
+          <DiscountProvider>
+            <QueryProvider>
+              <GlobalLoadingIndicator />
+              <ShopContextProvider>
+                <HelmetProvider>
+                  <NavigationMenu
+                    navigationLinks={[
+                      {
+                        label: "Volume Discounts",
+                        destination: "/volume/new",
+                      },
+                      {
+                        label: "Settings",
+                        destination: "/settings",
+                      },
+                    ]}
+                  />
+                  <Routes pages={pages} />
+                </HelmetProvider>
+              </ShopContextProvider>
+            </QueryProvider>
+          </DiscountProvider>
         </AppBridgeProvider>
       </BrowserRouter>
     </PolarisProvider>
