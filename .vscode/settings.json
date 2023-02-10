@@ -1,5 +1,10 @@
 {
+  "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "liquid.format.enable": true,
-  "editor.tabSize": 2
+  "rust-analyzer.linkedProjects": ["extensions/volume/Cargo.toml"],
+  "[liquid]": {
+    "editor.defaultFormatter": "Shopify.theme-check-vscode",
+    "editor.formatOnSave": true
+  }
 }
