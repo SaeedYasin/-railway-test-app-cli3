@@ -2,10 +2,13 @@
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "liquid.format.enable": true,
-  "rust-analyzer.linkedProjects": [
-    "extensions/volume/Cargo.toml",
-    "extensions/delivery-customization/Cargo.toml"
-  ],
+  "rust-analyzer": {
+    "procMacro.enable": true,
+    "linkedProjects": [
+      "extensions/volume/Cargo.toml",
+      "extensions/delivery-customization/Cargo.toml"
+    ]
+  },
   "[liquid]": {
     "editor.defaultFormatter": "Shopify.theme-check-vscode",
     "editor.formatOnSave": true
