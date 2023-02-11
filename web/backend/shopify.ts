@@ -21,7 +21,8 @@ const { restResources } = await import(
 
 const shopify = shopifyApp({
   api: {
-    apiVersion: LATEST_API_VERSION,
+    //@ts-ignore
+    apiVersion: "2023-04",
     restResources,
     billing: undefined, // or replace with billingConfig above to enable example billing
     logger: {

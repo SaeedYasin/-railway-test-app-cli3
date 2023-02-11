@@ -21,6 +21,7 @@ import billingRoutes, {
   billingUnauthenticatedRoutes,
 } from "./routes/billing/index.js";
 import discountRoutes from "./routes/discounts.js";
+import deliveryCustomizationRoutes from "./routes/delivery-customization.js";
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "8081",
@@ -77,6 +78,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/shop", shopRoutes);
 app.use("/api/billing", billingRoutes);
 app.use("/api/discounts", discountRoutes);
+app.use("/api/deliveryCustomization", deliveryCustomizationRoutes);
 
 // Reply to health check to let server know we are ready
 app.use("/health", (_req, res) => {
